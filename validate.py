@@ -1,6 +1,9 @@
 import numpy as np
+import torch
+from sklearn import metrics
+import torchvision
 
-def validate(args, model, clsfier, val_loader):
+def validate(args, model, val_loader, device):
     model.eval()
     n_classes = val_loader.dataset.num_classes
     gts = {i:[] for i in range(0, n_classes)}
@@ -11,13 +14,11 @@ def validate(args, model, clsfier, val_loader):
             images = images.to(device)
             labels = labels.float().to(device)
             outputs = model(images)
-            outputs = F.relu(outputs, inplace=True)
-            outputs = clsfier(outputs)
             outputs = torch.sigmoid(outputs)
             pred = outputs.squeeze().data.cpu().numpy()
             gt = labels.squeeze().data.cpu().numpy()
 
-            for label in range(0, args.n_classes):
+            for label in range(0, n_classes):
                 gts[label].extend(gt[:,label])
                 preds[label].extend(pred[:,label])
 

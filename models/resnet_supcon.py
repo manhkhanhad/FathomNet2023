@@ -243,7 +243,7 @@ class SupConResNet(nn.Module):
 
     def feature_list(self, x):
         feat_out, feat_list = self.encoder.feature_list(x)
-        return self.fc(feat_out), feat_list
+        return self.head(feat_out), feat_list
 
 
 class SupCEResNet(nn.Module):

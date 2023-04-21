@@ -32,7 +32,6 @@ for ood_dataset in args.out_datasets:
     ood_feat_log_all[ood_dataset] = ood_feat_log
 
 normalizer = lambda x: x / (np.linalg.norm(x, ord=2, axis=-1, keepdims=True) + 1e-10)
-
 prepos_feat = lambda x: np.ascontiguousarray(normalizer(x[:, range(448, 960)]))# Last Layer only
 
 ftrain = prepos_feat(feat_log)
